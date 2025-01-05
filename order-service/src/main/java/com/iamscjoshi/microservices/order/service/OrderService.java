@@ -7,6 +7,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.util.UUID;
+
 @Service
 @RequiredArgsConstructor
 @Slf4j
@@ -16,10 +19,9 @@ public class OrderService {
 
     public void placeOrder(OrderRequest orderRequest) {
         Order order = Order.builder()
-                .orderNumber(orderRequest.orderNumber())
+                .orderNumber(UUID.randomUUID().toString())
+                .price(orderRequest.price().multiply(BigDecimal.valueOf(orderRequest.quantity())))
                 .skuCode(orderRequest.skuCode())
-                .id(orderRequest.id())
-                .price(orderRequest.price())
                 .quantity(orderRequest.quantity())
                 .build();
 
